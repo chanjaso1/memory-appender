@@ -1,18 +1,31 @@
 package nz.ac.wgtn.swen301.assignment2;
 
 import com.google.gson.Gson;
-import com.sun.media.jfxmedia.logging.Logger;
-import org.apache.log4j.Layout;
-import org.apache.log4j.Priority;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import org.apache.log4j.*;
+import org.apache.log4j.spi.ErrorHandler;
+import org.apache.log4j.spi.Filter;
 import org.apache.log4j.spi.LoggingEvent;
+import sun.rmi.runtime.Log;
 
 import java.io.FileWriter;
 import java.io.Writer;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
-public class MemAppender {
 
-    private JSONLayout layout = new JSONLayout();
+public class MemAppender extends AppenderSkeleton {
+    String name;
+    long maxSize = 1000;
+    long discardedLogs = 0;
+    JSONLayout layout = new JSONLayout();
+
 
     LinkedList<LoggingEvent> loggingEvents = new LinkedList<LoggingEvent>(){
         /**
@@ -22,16 +35,14 @@ public class MemAppender {
          */
         @Override
         public void addLast(LoggingEvent element) {
-            if(loggingEvents.size() > maxSize){
+
+            if(loggingEvents.size() >= maxSize){
                 loggingEvents.removeFirst();
                 discardedLogs++;
             }
             super.add(element);
         }
     };
-    String name;
-    long maxSize = 1000;
-    long discardedLogs = 0;
 
 
     /**
@@ -55,23 +66,40 @@ public class MemAppender {
      * Export all logging events to a JSON file.
      * @param fileName -- The name of the JSON file.
      */
-    public void exportToJSON(String fileName){
+    public void exportToJSON(String fileName) {
+        if(!fileName.endsWith(".json"))  fileName += ".json";
+
         try{
 
-            if(!fileName.endsWith(".json"))  fileName += ".json";
             Writer writer = new FileWriter(fileName);
-            new Gson().toJson(loggingEvents, writer);
-            ArrayList<String> JSONStrings = new ArrayList<String>();
-            for(LoggingEvent le : loggingEvents){
-                JSONStrings.add(JSONLayout.format(le));
-            }
-            new Gson().toJson(JSONStrings, writer);
 
-         //   System.out.println(new Gson().toJson(loggingEvents));
+            writer.write("[\n");
+            for(int i = 0; i < loggingEvents.size(); i++){
+                if(i < loggingEvents.size()-1)
+                    writer.write(layout.format(loggingEvents.get(i)) + ",\n");
+                else
+                    writer.write(layout.format(loggingEvents.get(i)));
+            }
+            writer.write("\n]\n");
             writer.close();
         }catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
+    @Override
+    protected void append(LoggingEvent loggingEvent) {
+        loggingEvents.addLast(loggingEvent);
+    }
+
+    @Override
+    public void close() {
+
+    }
+
+    @Override
+    public boolean requiresLayout() {
+        return false;
+    }
 }
