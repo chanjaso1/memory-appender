@@ -23,7 +23,7 @@ public class JSONLayout extends Layout {
 
         map.put("logger", loggingEvent.getLoggerName());
         map.put("level", loggingEvent.getLevel().toString());
-        map.put("starttime", String.valueOf(loggingEvent.getStartTime()));
+        map.put("starttime", String.valueOf(loggingEvent.getTimeStamp()));
         map.put("thread", loggingEvent.getThreadName());
         map.put("message", String.valueOf(loggingEvent.getMessage().toString()));
 

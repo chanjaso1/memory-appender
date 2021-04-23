@@ -1,20 +1,10 @@
 package nz.ac.wgtn.swen301.assignment2;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import org.apache.log4j.*;
-import org.apache.log4j.spi.ErrorHandler;
-import org.apache.log4j.spi.Filter;
+import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
-import sun.rmi.runtime.Log;
 
 import java.io.FileWriter;
 import java.io.Writer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
