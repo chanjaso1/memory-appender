@@ -7,17 +7,25 @@ import org.apache.log4j.spi.LoggingEvent;
 import org.junit.Before;
 import org.junit.Test;
 
-
+/**
+ * JSONLayoutTest is a class that tests the JSONLayout class.
+ * This class contains test cases testing different aspects of code in the class.
+ */
 public class JSONLayoutTest {
 
     public Logger logger;
 
+    /**
+     * Initialize the logger before each test.
+     */
     @Before
     public void init(){
          logger = Logger.getLogger("Test Logger");
     }
 
-
+    /**
+     * Check that the format of a string, in a JSON format, is correct.
+     */
     @Test
     public void test_JSONLayout(){
         LoggingEvent loggingEvent = new LoggingEvent("Test", logger, Level.ERROR ,"This is a message",  new Throwable());
@@ -32,6 +40,10 @@ public class JSONLayoutTest {
                 "}"));
     }
 
+    /**
+     * Create an object from a successfully converted JSON string. This object must have the same values as the
+     * pre-converted object.
+     */
     @Test
     public void test_sameValues(){
         LoggingEvent loggingEvent = new LoggingEvent("Test2", logger, Level.ERROR ,"This is a message",  new Throwable());
@@ -46,6 +58,10 @@ public class JSONLayoutTest {
         assert (loggingEvent.getTimeStamp() == newLoggingEvent.getStarttime());
     }
 
+    /**
+     * Create two logging events with different loggers and levels. Check that these two logging events are different
+     * from each other.
+     */
     @Test
     public void test_JSONLayout3(){
         Logger secondLogger = Logger.getLogger("Second logger");

@@ -9,15 +9,16 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-
+/**
+ * The MemAppender is the appender for logging events and exporting each event in a .json file.
+ */
 public class MemAppender extends AppenderSkeleton {
-    String name;
     long maxSize = 1000;
     long discardedLogs = 0;
     JSONLayout layout = new JSONLayout();
 
 
-    LinkedList<LoggingEvent> loggingEvents = new LinkedList<LoggingEvent>(){
+     LinkedList<LoggingEvent> loggingEvents = new LinkedList<LoggingEvent>(){
         /**
          * Override the add method for this list. Remove the first item of the list, the oldest, if the logging list has
          * the maximum capacity.
@@ -73,11 +74,23 @@ public class MemAppender extends AppenderSkeleton {
             writer.write("\n]\n");
             writer.close();
         }catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("There was a writing error to " + fileName);
         }
     }
 
+    /**
+     * Set the name of the appender.
+     * @param name -- The name for the appender.
+     */
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    /**
+     * Append a logging event to the loggingEvents list.
+     * @param loggingEvent -- The logging event to be inserted.
+     */
     @Override
     protected void append(LoggingEvent loggingEvent) {
         loggingEvents.addLast(loggingEvent);
