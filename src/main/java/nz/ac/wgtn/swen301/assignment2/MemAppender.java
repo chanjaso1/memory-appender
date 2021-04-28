@@ -1,6 +1,7 @@
 package nz.ac.wgtn.swen301.assignment2;
 
 import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.PatternLayout;
 import org.apache.log4j.spi.LoggingEvent;
 
 import java.io.FileWriter;
@@ -12,7 +13,8 @@ import java.util.List;
 /**
  * The MemAppender is the appender for logging events and exporting each event in a .json file.
  */
-public class MemAppender extends AppenderSkeleton {
+public class MemAppender extends AppenderSkeleton implements MemAppenderMBean{
+    String name = "MemAppenderMBean:type=MemAppender";
     long maxSize = 1000;
     long discardedLogs = 0;
     JSONLayout layout = new JSONLayout();
@@ -44,6 +46,26 @@ public class MemAppender extends AppenderSkeleton {
         return Collections.unmodifiableList(loggingEvents);
     }
 
+    @Override
+    public String[] getLogs() {
+        PatternLayout patternLayout = new PatternLayout();
+        //Set the default conversion pattern
+        patternLayout.setConversionPattern("%r [%t] %p %c %x - %m%n");
+        String[] array = new String[loggingEvents.size()];
+
+        for (int i = 0; i < loggingEvents.size(); i++) {
+            array[i] = patternLayout.format(loggingEvents.get(i));
+        }
+
+
+        return  array;
+    }
+
+    @Override
+    public long getLogCount() {
+        return loggingEvents.size();
+    }
+
     /**
      * Get the number of discarded logging events.
      * @return the number of discarded events.
@@ -52,11 +74,18 @@ public class MemAppender extends AppenderSkeleton {
         return discardedLogs;
     }
 
-
+    /**
+     * Get the MemAppender name field.
+     * @return the name
+     */
+    public String getTheName(){
+        return this.name;
+    }
     /**
      * Export all logging events to a JSON file.
      * @param fileName -- The name of the JSON file.
      */
+    @Override
     public void exportToJSON(String fileName) {
         if(!fileName.endsWith(".json"))  fileName += ".json";
 
@@ -92,7 +121,7 @@ public class MemAppender extends AppenderSkeleton {
      * @param loggingEvent -- The logging event to be inserted.
      */
     @Override
-    protected void append(LoggingEvent loggingEvent) {
+    public void append(LoggingEvent loggingEvent) {
         loggingEvents.addLast(loggingEvent);
     }
 
