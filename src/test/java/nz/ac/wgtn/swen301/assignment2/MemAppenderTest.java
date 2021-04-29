@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * MemAppenderTest is a class that tests the MemAppender class.
@@ -55,7 +56,7 @@ public class MemAppenderTest {
     @Test
     public void test_getCurrentLogs(){
         MemAppender memAppender =  new MemAppender();
-        assert memAppender.loggingEvents.size() == 0 : "The logging events should be empty";
+        assert memAppender.getLogCount() == 0 : "The logging events should be empty";
         try {
             memAppender.getCurrentLogs().add(null);
             assert false : "The current logs cannot be modified.";
@@ -102,6 +103,30 @@ public class MemAppenderTest {
         assert memAppender.getName() == null;
         memAppender.setName("Test appender");
         assert memAppender.getName().equals("Test appender");
+    }
+
+    @Test
+    public void test_getLogs(){
+        MemAppender memAppender = new MemAppender();
+        memAppender.append(new LoggingEvent("Test", logger, Level.ERROR ,"This is logger #1",  new Throwable()));
+        memAppender.append(new LoggingEvent("Test", Logger.getLogger("A logger for warning"), Level.WARN ,"This is logger #2",  new Throwable()));
+        memAppender.append(new LoggingEvent("Test", Logger.getLogger("A logger for information"), Level.INFO ,"This is logger #3",  new Throwable()));
+
+        for(String event : memAppender.getLogs()){
+            System.out.println(event);
+        }
+    }
+
+    /**
+     * Check that these methods behaves as expected.
+     */
+    @Test
+    public void test_unusedMethods(){
+        MemAppender memAppender = new MemAppender("appender name");
+        MemAppender memAppender2 =  new MemAppender();
+        assert (!memAppender.requiresLayout());
+        memAppender.close();
+
     }
 }
 

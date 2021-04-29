@@ -71,4 +71,11 @@ public class JSONLayoutTest {
         assert firstEvent.getLoggerName().equals("Test Logger");
         assert secondEvent.getLoggerName().equals("Second logger");
     }
+
+
+    @Test
+    public void test_unusedMethods(){
+        assert (!new JSONLayout().ignoresThrowable());
+        new JSONLayout().activateOptions();
+    }
 }

@@ -23,9 +23,9 @@ public class LogRunner {
     public static void main(String[] args) throws MalformedObjectNameException, InstanceAlreadyExistsException, MBeanRegistrationException,
             NotCompliantMBeanException {
 
-        MemAppender appender = new MemAppender();                       //Define the appender.
+        MemAppender appender = new MemAppender("MemAppenderMBean:type=MemAppender");                       //Define the appender.
         MBeanServer server = ManagementFactory.getPlatformMBeanServer(); // Get an MBean Server instance.
-        ObjectName name = new ObjectName(appender.getTheName()); // Create an object, which is the MBean.
+        ObjectName name = new ObjectName(appender.getName()); // Create an object, which is the MBean.
 
 
         server.registerMBean(appender, name); // Register the MBean to the MBean Server.
@@ -52,7 +52,7 @@ public class LogRunner {
         if(random < 0.33 )      level = Level.INFO;
         else if(random < 0.66 ) level = Level.WARN;
         else                    level = Level.ERROR;
-        return new LoggingEvent("Test", Logger.getLogger("This is an mbean logger"), level , message,  new Throwable());
+        return new LoggingEvent("Test", Logger.getLogger("This is an mbean logger"), level , "Message: " + message,  new Throwable());
 
     }
 }

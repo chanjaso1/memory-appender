@@ -14,7 +14,6 @@ import java.util.List;
  * The MemAppender is the appender for logging events and exporting each event in a .json file.
  */
 public class MemAppender extends AppenderSkeleton implements MemAppenderMBean{
-    String name = "MemAppenderMBean:type=MemAppender";
     long maxSize = 1000;
     long discardedLogs = 0;
     JSONLayout layout = new JSONLayout();
@@ -38,6 +37,15 @@ public class MemAppender extends AppenderSkeleton implements MemAppenderMBean{
     };
 
 
+     public MemAppender(String name){
+        this.name = name;
+     }
+
+     public MemAppender(){
+
+     }
+
+
     /**
      * Return an unmodifiable list of the current logging events.
      * @return the loggingEvents list.
@@ -50,7 +58,7 @@ public class MemAppender extends AppenderSkeleton implements MemAppenderMBean{
     public String[] getLogs() {
         PatternLayout patternLayout = new PatternLayout();
         //Set the default conversion pattern
-        patternLayout.setConversionPattern("%r [%t] %p %c %x - %m%n");
+      //  patternLayout.setConversionPattern("%r [%t] %p %c %x - %m%n"); //Default based off https://www.tutorialspoint.com/log4j/log4j_patternlayout.htm
         String[] array = new String[loggingEvents.size()];
 
         for (int i = 0; i < loggingEvents.size(); i++) {
@@ -74,13 +82,6 @@ public class MemAppender extends AppenderSkeleton implements MemAppenderMBean{
         return discardedLogs;
     }
 
-    /**
-     * Get the MemAppender name field.
-     * @return the name
-     */
-    public String getTheName(){
-        return this.name;
-    }
     /**
      * Export all logging events to a JSON file.
      * @param fileName -- The name of the JSON file.
@@ -107,14 +108,6 @@ public class MemAppender extends AppenderSkeleton implements MemAppenderMBean{
         }
     }
 
-    /**
-     * Set the name of the appender.
-     * @param name -- The name for the appender.
-     */
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * Append a logging event to the loggingEvents list.
