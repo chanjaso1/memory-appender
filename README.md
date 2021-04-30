@@ -14,16 +14,13 @@ The ExportToJSON function is in the "Operations" tab, where the methods are loca
 
 
 ### b. A discussion why you chose a particular JSON library. Base your decision on your experience (if any), documentation, technical aspects (e.g. performance as shown in the stress tests, stability, number and size of direct and indirect dependencies), and social aspects (size and activity of developer community, license, support like mailing lists and stackoverflow topics, usage by others, … )  [3 marks]
-I chose the Gson library. Gson was the preferred library as it is open source and well documented.
+I chose the Gson library. Gson was the preferred library as it is open source and well documented. Gson provides advantages over libraries such as its simplicity of toJson/fromJson and its deserialization, as it does not require java entities[1]. Gson provides complete support to java generics. 
 
 ###### Performance
-Gson provides advantages over libraries such as its simplicity of toJson/fromJson and its deserialization, as it 
-does not require java entities[1]. Gson provides complete support to java generics. 
 Compared to other libraries such as Jackson and JSONP, Gson performs much better when parsing smaller files at 1`KB. 
 However, Gson falls behind in performance as the parsing speed for larger files, at 190 MB [2]. In this case, Gson is
 preferred because the exported files are relatively small. Gson also deals well with micro-services such as formatting strings.
  
-
 ###### Usage
 Such advantages Gson provides correlate with its popularity. According to AppBrain, a statistics website based on the Android ecosystem,
 Gson comes at #1 on both data serialization and open-source libraries in terms of popularity [3,4]. Gson is used in over 242,000 apps, with a market share of
