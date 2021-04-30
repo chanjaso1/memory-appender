@@ -1,5 +1,5 @@
 ### a. Any special Instructions if needed  
-When cloning the repository, the project should be added as a maven project when it is prompted.
+When cloning the repository, the project should be added as a maven project when it is prompted. If it is not prompted, then it is already a maven project.
 
 #### It is assumed that VisualVM is already installed with the standalone and in Intellij
 1. Open VisualVM
