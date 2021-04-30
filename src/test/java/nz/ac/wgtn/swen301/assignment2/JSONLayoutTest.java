@@ -84,7 +84,7 @@ public class JSONLayoutTest {
      * from each other.
      */
     @Test
-    public void test_JSONLayout3(){
+    public void test_differentLoggers(){
         Logger secondLogger = Logger.getLogger("Second logger");
         LoggingEvent firstEvent = new LoggingEvent("first", logger, Level.ERROR ,"This is a message",  new Throwable());
         LoggingEvent secondEvent = new LoggingEvent("second", secondLogger, Level.ERROR ,"This is a message",  new Throwable());
