@@ -1,5 +1,5 @@
 ### a. Any special Instructions if needed  
-#### It is assumed that VisualVM is already installed.
+#### It is assumed that VisualVM is already installed with the standalone and in Intellij
 1. Open VisualVM
 2. Run the main method for LogRunner.java with VisualVM
 3. Switch to VisualVM
