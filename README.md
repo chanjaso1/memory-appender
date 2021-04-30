@@ -1,4 +1,6 @@
 ### a. Any special Instructions if needed  
+When cloning the repository, the project should be added as a maven project when it is prompted.
+
 #### It is assumed that VisualVM is already installed with the standalone and in Intellij
 1. Open VisualVM
 2. Run the main method for LogRunner.java with VisualVM
