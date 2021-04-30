@@ -1,5 +1,5 @@
-###a. Any special Instructions if needed
-####It is assumed that VisualVM is already installed.
+### a. Any special Instructions if needed  
+#### It is assumed that VisualVM is already installed.
 1. Open VisualVM
 2. Run the main method for LogRunner.java with VisualVM
 3. Switch to VisualVM
@@ -11,10 +11,10 @@ The attributes should be visible and are updated when the refresh button is clic
 The ExportToJSON function is in the "Operations" tab, where the methods are located.
 
 
-###b. A discussion why you chose a particular JSON library. Base your decision on your experience (if any), documentation, technical aspects (e.g. performance as shown in the stress tests, stability, number and size of direct and indirect dependencies), and social aspects (size and activity of developer community, license, support like mailing lists and stackoverflow topics, usage by others, … )  [3 marks]
+### b. A discussion why you chose a particular JSON library. Base your decision on your experience (if any), documentation, technical aspects (e.g. performance as shown in the stress tests, stability, number and size of direct and indirect dependencies), and social aspects (size and activity of developer community, license, support like mailing lists and stackoverflow topics, usage by others, … )  [3 marks]
 I chose the Gson library. Gson was the preferred library as it is open source and well documented.
 
-######Performance
+###### Performance
 Gson provides advantages over libraries such as its simplicity of toJson/fromJson and its deserialization, as it 
 does not require java entities[1]. Gson provides complete support to java generics. 
 Compared to other libraries such as Jackson and JSONP, Gson performs much better when parsing smaller files at 1`KB. 
@@ -22,15 +22,15 @@ However, Gson falls behind in performance as the parsing speed for larger files,
 preferred because the exported files are relatively small. Gson also deals well with micro-services such as formatting strings.
  
 
-######Usage
+###### Usage
 Such advantages Gson provides correlate with its popularity. According to AppBrain, a statistics website based on the Android ecosystem,
 Gson comes at #1 on both data serialization and open-source libraries in terms of popularity [3,4]. Gson is used in over 242,000 apps, with a market share of
 29.58%. On the other hand, Jackson is used in over 3,000 apps with a market share of 0.39% in apps. In stack overflow, there are over 48,000 results when searching "Gson."
 
-#######License
+###### License  
 Gson uses the Apache License 2.0 which permits commercial and private use.
 
-######Experience
+###### Experience
 I had previous experience working with Gson during SWEN225, where I created JsonArrays and used reflection to convert Json
 strings into classes. In my project, I worked in a persistence module where the primary library I worked with was Gson.
 Since before starting this assignment, I had already known how to read, write and parse a json file.
